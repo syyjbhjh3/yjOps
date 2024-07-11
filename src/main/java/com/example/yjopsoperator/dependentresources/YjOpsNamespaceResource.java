@@ -18,7 +18,7 @@ public class YjOpsNamespaceResource extends CRUDKubernetesDependentResource<Name
         final String nsName = yjOps.getSpec().getNamespace();
         final String istio_injection = yjOps.getSpec().getIstio();
 
-        return new  NamespaceBuilder()
+        return new NamespaceBuilder()
                 .withNewMetadata()
                 .withName(nsName)
                 .addToLabels("istio-injection", istio_injection)

@@ -7,7 +7,9 @@ public class YjOpsSpec {
     private String repository;
     private String namespace;
     private String istio;
-    private List<Chart> chart;
+    private Chart jenkins;
+    private Chart argocd;
+    private Chart gitlab;
 
     public String getRepository() {
         return repository;
@@ -25,37 +27,41 @@ public class YjOpsSpec {
     public void setIstio(String istio) {
         this.istio = istio;
     }
-    public List<Chart> getChart() {
-        return chart;
+    public Chart getJenkins() {
+        return jenkins;
     }
-    public void setChart(List<Chart> chart) {
-        this.chart = chart;
+    public void setJenkins(Chart jenkins) {
+        this.jenkins = jenkins;
     }
-
-    public static class Chart{
-        private String name;
-        private String chartName;
-        private Integer nodePort;
-
-        public String getName() {
-            return name;
-        }
-        public void setName(String name) {
-            this.name = name;
-        }
-        public String getChartName() {
-            return chartName;
-        }
-        public void setChartName(String chartName) {
-            this.chartName = chartName;
-        }
-        public Integer getNodePort() {
-            return nodePort;
-        }
-        public void setNodePort(Integer nodePort) {
-            this.nodePort = nodePort;
-        }
+    public Chart getArgocd() {
+        return argocd;
+    }
+    public void setArgocd(Chart argocd) {
+        this.argocd = argocd;
+    }
+    public Chart getGitlab() {
+        return gitlab;
+    }
+    public void setGitlab(Chart gitlab) {
+        this.gitlab = gitlab;
     }
 
 
+    public static class Chart {
+        private String valuePath;
+        private String path;
+
+        public String getValuePath() {
+            return valuePath;
+        }
+        public void setValuePath(String valuePath) {
+            this.valuePath = valuePath;
+        }
+        public String getPath() {
+            return path;
+        }
+        public void setPath(String path) {
+            this.path = path;
+        }
+    }
 }
