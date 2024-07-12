@@ -19,7 +19,7 @@ import java.util.function.Supplier;
 public class YjOpsReconciler implements Reconciler<YjOps>, ErrorStatusHandler<YjOps>, Cleaner<YjOps> {
 
     @Override
-    public UpdateControl<YjOps> reconcile(YjOps yjOps, Context<YjOps> context) throws IOException {
+    public UpdateControl<YjOps> reconcile(YjOps yjOps, Context<YjOps> context) throws IOException, InterruptedException {
         deployHelmChart(yjOps, context);
         return UpdateControl.updateResourceAndPatchStatus(yjOps);
     }
@@ -45,9 +45,17 @@ public class YjOpsReconciler implements Reconciler<YjOps>, ErrorStatusHandler<Yj
         String argocd_valuse = getValueSafely(() -> yjOps.getSpec().getArgocd().getValuePath());
         String gitlab_valuse = getValueSafely(() -> yjOps.getSpec().getGitlab().getValuePath());
 
-        executeHelmCommand("helm", "install", jenkins, "-f", jenkins_valuse, "-n", namespace);
-        executeHelmCommand("helm", "install", argocd, "-f", argocd_valuse, "-n", namespace);
-        executeHelmCommand("helm", "install", gitlab, "-f", gitlab_valuse, "-n", namespace);
+        if(jenkins_valuse != null) {
+            executeHelmCommand("helm", "install", jenkins, "-f", jenkins_valuse, "-n", namespace);
+        }
+
+        if(argocd_valuse != null) {
+            executeHelmCommand("helm", "install", argocd, "-f", argocd_valuse, "-n", namespace);
+        }
+
+        if(gitlab_valuse != null) {
+            executeHelmCommand("helm", "install", gitlab, "-f", gitlab_valuse, "-n", namespace);
+        }
     }
 
     private <T> T getValueSafely(Supplier<T> supplier) {
@@ -81,7 +89,5 @@ public class YjOpsReconciler implements Reconciler<YjOps>, ErrorStatusHandler<Yj
                 throw new RuntimeException("Helm command failed with exit code " + process.exitValue());
             }
         }
-
-        log.info("Helm chart deployed successfully: " + String.join(" ", command));
     }
 }
