@@ -1,26 +1,5 @@
-# First stage: Build the application
-FROM gradle:7.6.0-jdk17-alpine AS build
+FROM openjdk:17-jdk-slim
+ADD ./build/libs/yjops-operator-0.0.1-SNAPSHOT.jar /
+WORKDIR /
 
-# Set the working directory
-WORKDIR /home/gradle/project
-
-# Copy the project files
-COPY . .
-
-# Build the application
-RUN gradle build --no-daemon
-
-# Second stage: Run the application
-FROM openjdk:22-jdk-alpine
-
-# Set the working directory
-WORKDIR /opt/app
-
-# Copy the jar file from the build stage
-COPY --from=build /home/gradle/project/build/libs/*-0.0.1-SNAPSHOT.jar /opt/app/app.jar
-
-# Expose the application port
-EXPOSE 80
-
-# Run the application
-CMD ["java", "-showversion", "-jar", "/opt/app/app.jar"]
+ENTRYPOINT ["java", "-Dspring.profiles.active=${SPRING_PROFILES_ACTIVE}", "-Dfile.encoding=UTF8", "-Duser.timezone=Asia/Seoul", "-jar", "yjops-operator-0.0.1-SNAPSHOT.jar"]
