@@ -20,6 +20,9 @@ public class YjOpsReconciler implements Reconciler<YjOps>, ErrorStatusHandler<Yj
 
     @Override
     public UpdateControl<YjOps> reconcile(YjOps yjOps, Context<YjOps> context) throws IOException, InterruptedException {
+        String repository = yjOps.getSpec().getRepository();
+        executeHelmCommand("helm", "repo", "add", repository);
+
         deployHelmChart(yjOps, context);
         return UpdateControl.updateResourceAndPatchStatus(yjOps);
     }
