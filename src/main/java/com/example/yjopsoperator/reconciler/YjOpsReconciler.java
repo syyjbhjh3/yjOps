@@ -50,14 +50,20 @@ public class YjOpsReconciler implements Reconciler<YjOps>, ErrorStatusHandler<Yj
 
         if(jenkins_valuse != null) {
             executeHelmCommand("helm", "install", jenkins, "-f", jenkins_valuse, "-n", namespace);
+        }else{
+            executeHelmCommand("helm", "install", jenkins, "-n", namespace);
         }
 
         if(argocd_valuse != null) {
             executeHelmCommand("helm", "install", argocd, "-f", argocd_valuse, "-n", namespace);
+        }else {
+            executeHelmCommand("helm", "install", argocd, "-n", namespace);
         }
 
         if(gitlab_valuse != null) {
             executeHelmCommand("helm", "install", gitlab, "-f", gitlab_valuse, "-n", namespace);
+        }else{
+            executeHelmCommand("helm", "install", gitlab, "-n", namespace);
         }
     }
 
