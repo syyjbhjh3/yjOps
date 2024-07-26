@@ -17,3 +17,8 @@ Notion - https://syyjbhjh7.notion.site/yjOps-Operator-9a6937eeb8a2470da403c14c16
     - Operator 뭔지는 알지만… Istio 설치할때 쓰는.. Jaeger Operator가 깔리던데…
 - 참조할 수 있는 이미 그 길을 걸으신 분이 계신다!
     - 참조 - https://dev.gmarket.com/112
+
+
+
+## Helm Repo
+helm repo add yjops https://syyjbhjh3.github.io/md-helm/
