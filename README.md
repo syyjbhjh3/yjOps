@@ -18,6 +18,13 @@ Notion - https://syyjbhjh7.notion.site/yjOps-Operator-9a6937eeb8a2470da403c14c16
 - 참조할 수 있는 이미 그 길을 걸으신 분이 계신다!
     - 참조 - https://dev.gmarket.com/112
 
+## 개발환경 세팅
+
+- Java용 Kubernetes Client API
+    - fabric8
+    - Official Java Client
+        - 함수에 argument 개수가 많고, argument가 `null`인 경우도 많아서 코드 가독성 하락
+     
 
 
 ## Helm Repo
