@@ -29,3 +29,15 @@ Notion - https://syyjbhjh7.notion.site/yjOps-Operator-9a6937eeb8a2470da403c14c16
 
 ## Helm Repo
 helm repo add yjops https://syyjbhjh3.github.io/md-helm/
+
+## Custom Helm 소개
+
+- Jenkins
+    - Docker in Docker Image를 Side Container로 사용하여 Docker Socket Volume으로 공유
+    - Local Repository 설정을 위한 command 추가
+    - Volume 설정이 불가한 /usr/local/bin 경로는 Container 생성시 Post-start를 통해 경로로 mv
+- Gitlab
+    - gitlab-ce:latest Image를 가지고, 개별 pvc만 2개를 생성하여 배포
+    - gitlab 공식 차트는 NodePort 사용시, css를 읽지 못하고 사용하지 않는 컴포넌트이 많이 배포됨
+- ArgoCD
+    - values.yaml - Insecure 부분만 수정
