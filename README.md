@@ -41,3 +41,9 @@ helm repo add yjops https://syyjbhjh3.github.io/md-helm/
     - gitlab 공식 차트는 NodePort 사용시, css를 읽지 못하고 사용하지 않는 컴포넌트이 많이 배포됨
 - ArgoCD
     - values.yaml - Insecure 부분만 수정
+ 
+ ## Github Page 구성
+
+git checkout main # 메인브렌치로 전환
+git checkout -b release
+git push --set-upstream origin release
