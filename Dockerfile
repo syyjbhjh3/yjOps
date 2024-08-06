@@ -1,4 +1,4 @@
-FROM openjdk:17-jdk-slim
+FROM openjdk:22-jdk-slim
 ADD ./build/libs/yjops-operator-0.0.1-SNAPSHOT.jar /
 WORKDIR /
 
