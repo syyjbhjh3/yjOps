@@ -1,18 +1,20 @@
 #!/bin/sh
 
 REGISTRY=msa.harbor.com/library
-TAG=v0.4
+TAG=v0.5
 APP_NAME=yjops
 
 if [ $1 = "build" ]; then
   # 1.docker build
   echo ---DOCKER build---
+  gradle build -x test
 
+  # 2.docker build
+  echo ---DOCKER build---
   docker build --platform linux/amd64 -t $REGISTRY/$APP_NAME:$TAG .
 
-  # 2.docker images
+  # 3.docker images
   echo ---DOCKER images...---
-
   docker images | grep $REGISTRY
 fi
 
