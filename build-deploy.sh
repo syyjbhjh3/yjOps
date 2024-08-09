@@ -24,7 +24,7 @@ if [ $1 = "save" ]; then
 fi
 
 if [ $1 = "send" ]; then
-	TARGET_REPO=root@
+	TARGET_REPO=root@10.0.27.148
 	TARGET_SSH_PORT=22
 	TARGET_DIR=/root
 

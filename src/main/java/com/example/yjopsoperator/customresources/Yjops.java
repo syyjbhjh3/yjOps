@@ -14,6 +14,6 @@ public class Yjops extends CustomResource<YjopsSpec, YjopsStatus> implements Nam
 
     @Override
     public String toString() {
-        return "YjOps{spec=" + spec + ", status=" + status + "}";
+        return "Yjops{spec=" + spec + ", status=" + status + "}";
     }
 }

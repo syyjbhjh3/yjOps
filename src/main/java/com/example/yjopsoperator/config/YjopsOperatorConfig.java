@@ -12,7 +12,7 @@ import java.util.List;
 public class YjopsOperatorConfig {
 
     @Bean
-    public YjopsReconciler yjOpsReconciler() {
+    public YjopsReconciler yjopsReconciler() {
         return new YjopsReconciler();
     }
 
