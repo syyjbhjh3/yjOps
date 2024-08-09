@@ -1,7 +1,7 @@
 package com.example.yjopsoperator.reconciler;
 
-import com.example.yjopsoperator.customresources.YjOps;
-import com.example.yjopsoperator.dependentresources.YjOpsNamespaceResource;
+import com.example.yjopsoperator.customresources.Yjops;
+import com.example.yjopsoperator.dependentresources.YjopsNamespaceResource;
 import io.javaoperatorsdk.operator.api.reconciler.*;
 import io.javaoperatorsdk.operator.api.reconciler.dependent.Dependent;
 
@@ -14,12 +14,12 @@ import java.util.function.Supplier;
 
 @ControllerConfiguration(
         dependents = {
-                @Dependent(type = YjOpsNamespaceResource.class)
+                @Dependent(type = YjopsNamespaceResource.class)
         })
-public class YjOpsReconciler implements Reconciler<YjOps>, ErrorStatusHandler<YjOps>, Cleaner<YjOps> {
+public class YjopsReconciler implements Reconciler<Yjops>, ErrorStatusHandler<Yjops>, Cleaner<Yjops> {
 
     @Override
-    public UpdateControl<YjOps> reconcile(YjOps yjOps, Context<YjOps> context) throws IOException, InterruptedException {
+    public UpdateControl<Yjops> reconcile(Yjops yjOps, Context<Yjops> context) throws IOException, InterruptedException {
         String repository = yjOps.getSpec().getRepository();
         executeHelmCommand("helm", "repo", "add", repository);
 
@@ -28,16 +28,16 @@ public class YjOpsReconciler implements Reconciler<YjOps>, ErrorStatusHandler<Yj
     }
 
     @Override
-    public DeleteControl cleanup(YjOps yjOps, Context<YjOps> context) {
+    public DeleteControl cleanup(Yjops yjOps, Context<Yjops> context) {
         return DeleteControl.defaultDelete();
     }
 
     @Override
-    public ErrorStatusUpdateControl<YjOps> updateErrorStatus(YjOps yjOps, Context<YjOps> context, Exception e) {
+    public ErrorStatusUpdateControl<Yjops> updateErrorStatus(Yjops yjOps, Context<Yjops> context, Exception e) {
         return ErrorStatusUpdateControl.patchStatus(yjOps);
     }
 
-    private void deployHelmChart(YjOps yjOps, Context<YjOps> context) throws IOException, InterruptedException {
+    private void deployHelmChart(Yjops yjOps, Context<Yjops> context) throws IOException, InterruptedException {
         String namespace = yjOps.getSpec().getNamespace();
 
         String jenkins = getValueSafely(() -> yjOps.getSpec().getJenkins().getPath());

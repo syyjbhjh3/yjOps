@@ -10,7 +10,7 @@ import io.fabric8.kubernetes.model.annotation.Version;
  */
 @Group("yjops-operator.io")
 @Version("v1")
-public class YjOps extends CustomResource<YjOpsSpec, YjOpsStatus> implements Namespaced {
+public class Yjops extends CustomResource<YjopsSpec, YjopsStatus> implements Namespaced {
 
     @Override
     public String toString() {

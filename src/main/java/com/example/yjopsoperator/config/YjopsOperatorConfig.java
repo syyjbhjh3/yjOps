@@ -1,6 +1,6 @@
 package com.example.yjopsoperator.config;
 
-import com.example.yjopsoperator.reconciler.YjOpsReconciler;
+import com.example.yjopsoperator.reconciler.YjopsReconciler;
 import io.javaoperatorsdk.operator.Operator;
 import io.javaoperatorsdk.operator.api.reconciler.Reconciler;
 import org.springframework.context.annotation.Bean;
@@ -9,11 +9,11 @@ import org.springframework.context.annotation.Configuration;
 import java.util.List;
 
 @Configuration
-public class YjOpsOperatorConfig {
+public class YjopsOperatorConfig {
 
     @Bean
-    public YjOpsReconciler yjOpsReconciler() {
-        return new YjOpsReconciler();
+    public YjopsReconciler yjOpsReconciler() {
+        return new YjopsReconciler();
     }
 
     @Bean(initMethod = "start", destroyMethod = "stop")

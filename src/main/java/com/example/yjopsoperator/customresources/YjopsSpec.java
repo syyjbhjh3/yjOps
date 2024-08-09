@@ -1,9 +1,7 @@
 package com.example.yjopsoperator.customresources;
 
-import java.util.List;
-
 // Lombok @Data로도 적용 가능
-public class YjOpsSpec {
+public class YjopsSpec {
     private String repository;
     private String namespace;
     private String istio;
