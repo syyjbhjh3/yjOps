@@ -2,12 +2,13 @@ package com.example.yjopsoperator.customresources;
 
 // Lombok @Data로도 적용 가능
 public class YjopsSpec {
-    private String repository;
+    private String name;
     private String namespace;
-    private String istio;
-    private Chart jenkins;
-    private Chart argocd;
-    private Chart gitlab;
+    private String repository;
+    private String image;
+    private Integer port;
+    private String md;
+
 
     public String getRepository() {
         return repository;
@@ -21,45 +22,35 @@ public class YjopsSpec {
     public void setNamespace(String namespace) {
         this.namespace = namespace;
     }
-    public String getIstio() { return istio; }
-    public void setIstio(String istio) {
-        this.istio = istio;
-    }
-    public Chart getJenkins() {
-        return jenkins;
-    }
-    public void setJenkins(Chart jenkins) {
-        this.jenkins = jenkins;
-    }
-    public Chart getArgocd() {
-        return argocd;
-    }
-    public void setArgocd(Chart argocd) {
-        this.argocd = argocd;
-    }
-    public Chart getGitlab() {
-        return gitlab;
-    }
-    public void setGitlab(Chart gitlab) {
-        this.gitlab = gitlab;
+    public String getName() {
+        return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public static class Chart {
-        private String valuePath;
-        private String path;
+    public String getImage() {
+        return image;
+    }
 
-        public String getValuePath() {
-            return valuePath;
-        }
-        public void setValuePath(String valuePath) {
-            this.valuePath = valuePath;
-        }
-        public String getPath() {
-            return path;
-        }
-        public void setPath(String path) {
-            this.path = path;
-        }
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getMd() {
+        return md;
+    }
+
+    public void setMd(String md) {
+        this.md = md;
+    }
+
+    public Integer getPort() {
+        return port;
+    }
+
+    public void setPort(Integer port) {
+        this.port = port;
     }
 }

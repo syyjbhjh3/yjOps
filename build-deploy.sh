@@ -1,7 +1,7 @@
 #!/bin/sh
 
 REGISTRY=msa.harbor.com/library
-TAG=v0.5
+TAG=v0.6
 APP_NAME=yjops
 
 if [ $1 = "build" ]; then
