@@ -7,9 +7,9 @@ import io.javaoperatorsdk.operator.processing.dependent.kubernetes.CRUDKubernete
 import io.javaoperatorsdk.operator.processing.dependent.kubernetes.KubernetesDependent;
 
 @KubernetesDependent
-public class YjopsPersistentVolumeClaimResource extends CRUDKubernetesDependentResource<PersistentVolumeClaim, Yjops> {
+public class YjopsDataPvcResource extends CRUDKubernetesDependentResource<PersistentVolumeClaim, Yjops> {
 
-    public YjopsPersistentVolumeClaimResource() {
+    public YjopsDataPvcResource() {
         super(PersistentVolumeClaim.class);
     }
 
@@ -17,17 +17,18 @@ public class YjopsPersistentVolumeClaimResource extends CRUDKubernetesDependentR
     protected PersistentVolumeClaim desired(Yjops yjops, Context<Yjops> context) {
         final ObjectMeta yjopsMetadata = yjops.getMetadata();
         final String yjopsName = yjopsMetadata.getName();
+        final String mdName = yjops.getSpec().getMd();
 
         return new PersistentVolumeClaimBuilder()
                 .editMetadata()
-                .withName(yjopsName + "-pvc")
+                .withName(mdName + "-data-pvc")
                 .withNamespace(yjopsMetadata.getNamespace())
                 .endMetadata()
                 .withNewSpec()
                 .withStorageClassName(yjops.getSpec().getStorageClassName())
-                .withAccessModes("ReadWriteOnce")
+                .withAccessModes("ReadWriteMany")
                 .withNewResources()
-                .addToRequests("storage", new Quantity("50Gi"))
+                .addToRequests("storage", new Quantity("30Gi"))
                 .endResources()
                 .endSpec()
                 .build();
