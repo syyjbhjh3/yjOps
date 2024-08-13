@@ -19,33 +19,71 @@ public class YjopsDeploymentResource extends CRUDKubernetesDependentResource<Dep
     protected Deployment desired(Yjops yjops, Context<Yjops> context) {
         final ObjectMeta yjopsMetadata = yjops.getMetadata();
         final String yjopsName = yjopsMetadata.getName();
+        final String mdName = yjops.getSpec().getMd();
 
-        return new DeploymentBuilder()
-                .editMetadata()
-                .withName(yjopsName)
-                .withNamespace(yjopsMetadata.getNamespace())
-                .addToLabels("app", yjopsName)
-                .endMetadata()
-                .editSpec()
-                .withSelector(new LabelSelectorBuilder()
-                        .addToMatchLabels("app", yjopsName)
-                        .build())
-                .withReplicas(1)
-                .withTemplate(new PodTemplateSpecBuilder()
-                        .editMetadata()
-                        .addToLabels("app", yjopsName)
-                        .endMetadata()
-                        .editSpec()
-                        .withContainers(new ContainerBuilder()
-                                .withName(yjopsName + "-container")
-                                .withImage(yjops.getSpec().getImage())
-                                .addToPorts(new ContainerPortBuilder()
-                                        .withContainerPort(yjops.getSpec().getPort())
-                                        .build())
-                                .build())
-                        .endSpec()
-                        .build())
-                .endSpec()
-                .build();
+        Deployment deployment = null;
+
+        if (mdName.equals("jenkins")){
+
+        } else if (mdName.equals("gitlab")) {
+            deployment = new DeploymentBuilder()
+                    .editMetadata()
+                    .withName(mdName + "-deployment")
+                    .withNamespace(yjopsMetadata.getNamespace())
+                    .addToLabels("app", mdName)
+                    .endMetadata()
+                    .editSpec()
+                    .withReplicas(1)
+                    .withSelector(new LabelSelectorBuilder()
+                            .addToMatchLabels("app", mdName)
+                            .build())
+                    .withTemplate(new PodTemplateSpecBuilder()
+                            .editMetadata()
+                            .addToLabels("app", mdName)
+                            .endMetadata()
+                            .editSpec()
+                            .withContainers(new ContainerBuilder()
+                                    .withName(mdName + "-container")
+                                    .withImage(yjops.getSpec().getImage())
+                                    .addToPorts(
+                                            new ContainerPortBuilder()
+                                                    .withContainerPort(yjops.getSpec().getPort())
+                                                    .build(),
+                                            new ContainerPortBuilder()
+                                                    .withContainerPort(yjops.getSpec().getPort())
+                                                    .build(),
+                                            new ContainerPortBuilder()
+                                                    .withContainerPort(yjops.getSpec().getPort())
+                                                    .build()
+                                            )
+                                    .addNewVolumeMount()
+                                    .withName("gitlab-config-volume")
+                                    .withMountPath("/etc/gitlab")
+                                    .endVolumeMount()
+                                    .addNewVolumeMount()
+                                    .withName("gitlab-data-volume")
+                                    .withMountPath("/var/opt/gitlab")
+                                    .endVolumeMount()
+                                    .build())
+                            .withVolumes(new VolumeBuilder()
+                                            .withName("gitlab-config-volume")
+                                            .withNewPersistentVolumeClaim()
+                                            .withClaimName("gitlab-config")
+                                            .endPersistentVolumeClaim()
+                                            .build(),
+                                    new VolumeBuilder()
+                                            .withName("gitlab-data-volume")
+                                            .withNewPersistentVolumeClaim()
+                                            .withClaimName("gitlab-data")
+                                            .endPersistentVolumeClaim()
+                                            .build()
+                            )
+                            .endSpec()
+                            .build())
+                    .endSpec()
+                    .build();
+        }
+
+        return deployment;
     }
 }
