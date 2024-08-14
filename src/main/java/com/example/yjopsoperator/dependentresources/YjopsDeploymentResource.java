@@ -87,7 +87,7 @@ public class YjopsDeploymentResource extends CRUDKubernetesDependentResource<Dep
                                     new VolumeBuilder()
                                             .withName("jenkins-vol")
                                             .withNewPersistentVolumeClaim()
-                                                .withClaimName("jenkins-pvc")
+                                                .withClaimName("jenkins-data-pvc")
                                             .endPersistentVolumeClaim()
                                             .build(),
                                     new VolumeBuilder()
@@ -178,7 +178,6 @@ public class YjopsDeploymentResource extends CRUDKubernetesDependentResource<Dep
                     .endSpec()
                     .build();
         }
-
         return deployment;
     }
 }
