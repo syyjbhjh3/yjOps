@@ -45,7 +45,7 @@ public class YjopsDeploymentResource extends CRUDKubernetesDependentResource<Dep
                             .withContainers(
                                     new ContainerBuilder()
                                         .withName(mdName + "-container")
-                                        .withImage(yjops.getSpec().getImage())
+                                        .withImage("jenkins/jenkins:lts")
                                         .withImagePullPolicy("IfNotPresent")
                                         .addToPorts(
                                                 new ContainerPortBuilder()
@@ -139,16 +139,16 @@ public class YjopsDeploymentResource extends CRUDKubernetesDependentResource<Dep
                             .editSpec()
                             .withContainers(new ContainerBuilder()
                                     .withName(mdName + "-container")
-                                    .withImage(yjops.getSpec().getImage())
+                                    .withImage("gitlab/gitlab-ce")
                                     .addToPorts(
                                             new ContainerPortBuilder()
-                                                    .withContainerPort(yjops.getSpec().getPort())
+                                                    .withContainerPort(80)
                                                     .build(),
                                             new ContainerPortBuilder()
-                                                    .withContainerPort(yjops.getSpec().getPort())
+                                                    .withContainerPort(443)
                                                     .build(),
                                             new ContainerPortBuilder()
-                                                    .withContainerPort(yjops.getSpec().getPort())
+                                                    .withContainerPort(22)
                                                     .build()
                                             )
                                     .addNewVolumeMount()
