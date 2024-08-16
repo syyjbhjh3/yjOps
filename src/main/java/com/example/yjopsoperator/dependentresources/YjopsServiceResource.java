@@ -16,7 +16,6 @@ public class YjopsServiceResource extends CRUDKubernetesDependentResource<Servic
     @Override
     protected Service desired(Yjops yjops, Context<Yjops> context) {
         final ObjectMeta yjopsMetadata = yjops.getMetadata();
-        final String yjopsName = yjopsMetadata.getName();
         final String mdName = yjops.getSpec().getMd();
 
         /* Required Port */
@@ -24,9 +23,10 @@ public class YjopsServiceResource extends CRUDKubernetesDependentResource<Servic
         final int httpsPort = 443;
         final int targetPort = 8080;
         final int sshPort = 22;
+
         /* Custom NodePort */
-        int jenkinsNodePort = 31010;
-        int gitlabNodePort = 31020;
+        int jenkinsNodePort = 31070;
+        int gitlabNodePort = 31080;
 
         Service service = null;
 

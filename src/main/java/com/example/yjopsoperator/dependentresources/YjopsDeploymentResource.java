@@ -18,7 +18,6 @@ public class YjopsDeploymentResource extends CRUDKubernetesDependentResource<Dep
     @Override
     protected Deployment desired(Yjops yjops, Context<Yjops> context) {
         final ObjectMeta yjopsMetadata = yjops.getMetadata();
-        //final String yjopsName = yjopsMetadata.getName();
         final String mdName = yjops.getSpec().getMd();
 
         Deployment deployment = null;
@@ -163,13 +162,13 @@ public class YjopsDeploymentResource extends CRUDKubernetesDependentResource<Dep
                             .withVolumes(new VolumeBuilder()
                                             .withName("gitlab-config-volume")
                                             .withNewPersistentVolumeClaim()
-                                                .withClaimName("gitlab-config")
+                                                .withClaimName("gitlab-config-pvc")
                                             .endPersistentVolumeClaim()
                                             .build(),
                                     new VolumeBuilder()
                                             .withName("gitlab-data-volume")
                                                 .withNewPersistentVolumeClaim()
-                                            .withClaimName("gitlab-data")
+                                            .withClaimName("gitlab-data-pvc")
                                             .endPersistentVolumeClaim()
                                             .build()
                             )
