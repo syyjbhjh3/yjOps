@@ -1,0 +1,79 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: yjops-operator
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: yjops-operator
+spec:
+  selector:
+    matchLabels:
+      app: yjops-operator
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: yjops-operator
+    spec:
+      serviceAccountName: yjops-operator
+      containers:
+        - name: yjops-operator
+          image: msa.harbor.com/library/yjops:v1.2
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: yjops-operator-admin
+subjects:
+  - kind: ServiceAccount
+    name: yjops-operator
+    namespace: default
+roleRef:
+  kind: ClusterRole
+  name: yjops-operator
+  apiGroup: ""
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: yjops-operator
+rules:
+  - apiGroups:
+      - ""
+      - "extensions"
+      - "apps"
+    resources:
+      - deployments
+      - services
+      - pods
+      - pods/exec
+      - namespaces
+      - persistentvolumeclaims
+    verbs:
+      - '*'
+  - apiGroups:
+      - "apiextensions.k8s.io"
+    resources:
+      - customresourcedefinitions
+    verbs:
+      - '*'
+  - apiGroups:
+      - "yjops-operator.io"
+    resources:
+      - yjops
+    verbs:
+      - '*'
+  - apiGroups:
+      - "networking.k8s.io"
+    resources:
+      - ingresses
+    verbs:
+      - '*'

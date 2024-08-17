@@ -10,9 +10,6 @@ import io.javaoperatorsdk.operator.api.reconciler.Context;
 import io.javaoperatorsdk.operator.processing.dependent.kubernetes.CRUDKubernetesDependentResource;
 import io.javaoperatorsdk.operator.processing.dependent.kubernetes.KubernetesDependent;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @KubernetesDependent(resourceDiscriminator = PersistentVolumeClaim1Discriminator.class)
 public class YjopsPvcResource extends CRUDKubernetesDependentResource<PersistentVolumeClaim, Yjops> {
     public static final String NAME_SUFFIX = "-1";

@@ -14,10 +14,12 @@ import static com.example.yjopsoperator.dependentresources.YjopsPvcResource.NAME
 public class PersistentVolumeClaim1Discriminator implements ResourceDiscriminator<PersistentVolumeClaim, Yjops>{
     @Override
     public Optional<PersistentVolumeClaim> distinguish(Class<PersistentVolumeClaim> resource, Yjops yjops, Context<Yjops> context) {
+        /* InformerEventSource 객체는 Kubernetes 클러스터에서 해당 리소스(PersistentVolumeClaim)를 감시하고 이벤트를 처리 */
         InformerEventSource<PersistentVolumeClaim, Yjops> ies =
                 (InformerEventSource<PersistentVolumeClaim, Yjops>) context
                         .eventSourceRetriever().getResourceEventSourceFor(PersistentVolumeClaim.class);
 
+        /* 특정 pvc를 감시 */
         return ies.get(new ResourceID(yjops.getMetadata().getName() + NAME_SUFFIX,
                 yjops.getMetadata().getNamespace()));
     }

@@ -2,14 +2,7 @@ apiVersion: yjops-operator.io/v1
 kind: Yjops
 metadata:
   name: sample
-  namespace: yjops
+  namespace: default
 spec:
-  namespace: yjops
-  repository: https://syyjbhjh3.github.io/md-helm/
-  istio: true
-  gitlab:
-    path: yjops/gitlab
-  jenkins:
-    path: yjops/jenkins
-  argocd:
-    path: yjops/argocd
+  name: yjops
+  md: gitlab
