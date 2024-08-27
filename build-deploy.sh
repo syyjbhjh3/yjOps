@@ -10,7 +10,7 @@ if [ $1 = "init" ]; then
   export M2=$M2_HOME/bin
   export JAVA_HOME=/go/build-tool/jdk8u382-b05-jre
   export GRADLE_HOME=/opt/gradle-8.8
-  export PATH=$M2:$JAVA_HOME:$GRADLE_HOME/bin:$PATH
+  export PATH=$M2:$JAVA_HOME/bin:$GRADLE_HOME:$PATH
 fi
 
 if [ $1 = "build" ]; then
