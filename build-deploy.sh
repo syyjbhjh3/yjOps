@@ -4,6 +4,15 @@ REGISTRY=msa.harbor.com/library
 TAG=v1.2
 APP_NAME=yjops
 
+# BUILD TOOL SETTING - INIT
+if [ $1 = "init" ]; then
+  export M2_HOME=/go/build-tool/apache-maven-3.9.8
+  export M2=$M2_HOME/bin
+  export JAVA_HOME=/go/build-tool/jdk8u382-b05-jre
+  export GRADLE_HOME=/opt/gradle-8.8
+  export PATH=$M2:$JAVA_HOME/bin:$GRADLE_HOME/bin:$PATH
+fi
+
 if [ $1 = "build" ]; then
   # 1.docker build
   echo ---DOCKER build---
@@ -11,11 +20,11 @@ if [ $1 = "build" ]; then
 
   # 2.docker build
   echo ---DOCKER build---
-  docker build --platform linux/amd64 -t $REGISTRY/$APP_NAME:$TAG .
+  #docker build --platform linux/amd64 -t $REGISTRY/$APP_NAME:$TAG .
 
   # 3.docker images
   echo ---DOCKER images...---
-  docker images | grep $REGISTRY
+  #docker images | grep $REGISTRY
 fi
 
 # DOCKER SAVE
